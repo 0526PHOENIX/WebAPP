@@ -114,6 +114,6 @@ if __name__ == "__main__":
     print()
 
     print()
-    print(shoe.remaining())
-    print(temp.remaining())
+    print(shoe.counts)
+    print(temp.counts)
     print()

@@ -1,0 +1,31 @@
+Player: ['7', 'Q']
+Dealer: ['K']
+Best action: STAND
+Final result: {'player_cards': ['7', 'Q'], 'dealer_cards': ['K', 'J'], 'player_value': 17, 'dealer_value': 20, 'result': -1.0}
+
+Player: ['5', '7']
+Dealer: ['Q']
+Best action: STAND
+Final result: {'player_cards': ['5', '7'], 'dealer_cards': ['Q', '7'], 'player_value': 12, 'dealer_value': 17, 'result': -1.0}
+
+Player: ['6', '6']
+Dealer: ['7']
+Best action: STAND
+Final result: {'player_cards': ['6', '6'], 'dealer_cards': ['7', '8', '7'], 'player_value': 12, 'dealer_value': 22, 'result': 1.0}
+
+Player: ['2', '2']
+Dealer: ['J']
+Best action: HIT
+Best action: HIT
+Best action: HIT
+Final result: {'player_cards': ['2', '2', '4', '5', '2'], 'dealer_cards': ['J', '4', '10'], 'player_value': 15, 'dealer_value': 24, 'result': 1.0}
+
+Player: ['8', 'A']
+Dealer: ['A']
+Best action: STAND
+Final result: {'player_cards': ['8', 'A'], 'dealer_cards': ['A', '4', '7', 'K'], 'player_value': 19, 'dealer_value': 22, 'result': 1.0}
+
+Player: ['10', '6']
+Dealer: ['6']
+Best action: STAND
+Final result: {'player_cards': ['10', '6'], 'dealer_cards': ['6', 'J', 'K'], 'player_value': 16, 'dealer_value': 26, 'result': 1.0}

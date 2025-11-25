@@ -28,9 +28,11 @@ class Simulator():
     Initialization
     ====================================================================================================================
     """
-    def __init__(self, base_shoe: Shoe, blackjack_payout: float = 1.5, rng_seed: int = None) -> None:
+    def __init__(self, base_shoe: Shoe, num_sim: int = 10000, blackjack_payout: float = 1.5, rng_seed: int = None) -> None:
 
         self.base_shoe = base_shoe
+
+        self.num_sim = num_sim
         self.blackjack_payout = blackjack_payout
         self.rng = random.Random(rng_seed)
 
@@ -65,10 +67,10 @@ class Simulator():
     
     ====================================================================================================================
     """
-    def simulate_action(self, player_cards: List[Rank], dealer_cards: List[Rank], action: str, n_sim: int = 5000) -> Dict:
+    def simulate_action(self, player_cards: List[Rank], dealer_cards: List[Rank], action: str) -> Dict:
 
         payoffs = []
-        for _ in range(n_sim):
+        for _ in range(self.num_sim):
 
             # 
             shoe = self._prepare_shoe_from_state(player_cards[:], dealer_cards[:])
@@ -178,7 +180,7 @@ class Simulator():
     
     ====================================================================================================================
     """
-    def evaluate_all(self, player_cards: List[Rank], dealer_cards: List[Rank], n_sim: int = 5000, allow_split: bool = True) -> Dict:
+    def evaluate_all(self, player_cards: List[Rank], dealer_cards: List[Rank], allow_split: bool = False) -> Dict:
 
         actions = ['STAND']
 
@@ -193,7 +195,7 @@ class Simulator():
 
         results = {}
         for action in actions:
-            results[action] = self.simulate_action(player_cards[:], dealer_cards[:], action, n_sim = n_sim)
+            results[action] = self.simulate_action(player_cards[:], dealer_cards[:], action)
 
         # 
         best = max(results.items(), key = lambda kv: kv[1]['ev'])
@@ -214,7 +216,7 @@ Main Function
 if __name__ == "__main__":
 
     base_shoe = Shoe(num_decks = 4, rng = random.Random(12345))
-    simulator = Simulator(base_shoe, blackjack_payout = 1.5, rng_seed = 42)
+    simulator = Simulator(base_shoe, num_sim = 10000, blackjack_payout = 1.5, rng_seed = 42)
 
     # Example states
     examples = [
@@ -225,7 +227,7 @@ if __name__ == "__main__":
 
         print("=== State:", [card_str(x) for x in player], "vs", [card_str(x) for x in dealer])
 
-        res = simulator.evaluate_all(player, dealer, n_sim = 10000, allow_split = True)
+        res = simulator.evaluate_all(player, dealer, allow_split = True)
         for a, stats in res['results'].items():
             print(f"  {a}: ev={stats['ev']:.4f}, win={stats['win_rate']:.3f}, loss={stats['loss_rate']:.3f}, push={stats['push_rate']:.3f}")
         print("  Best:", res['best_action'], "EV=", res['best_ev'])
