@@ -86,10 +86,6 @@ class Simulator():
             elif action == 'HIT':
 
                 """
-                --------------------------------------------------------------------------------------------------------
-                Hit 1
-                --------------------------------------------------------------------------------------------------------
-                """
                 # Hit
                 player_hand.add_card(shoe.draw_one())
 
@@ -100,17 +96,6 @@ class Simulator():
                     payoffs.append(payoff)
                     continue
 
-                # if player_hand.is_bust() or player_hand.best_value() >= 21 or len(player_hand) >= 5:
-                #     dealer_play(shoe, dealer_hand)
-                #     payoff = settle_hand(player_hand, dealer_hand, blackjack_payout = self.blackjack_payout)
-                #     payoffs.append(payoff)
-                #     continue
-
-                """
-                --------------------------------------------------------------------------------------------------------
-                Hit 2
-                --------------------------------------------------------------------------------------------------------
-                """
                 # Hit
                 player_hand.add_card(shoe.draw_one())
 
@@ -120,18 +105,7 @@ class Simulator():
                 if player_hand.is_bust() or payoff > 0 or len(player_hand) >= 5:
                     payoffs.append(payoff)
                     continue
-                
-                # if player_hand.is_bust() or player_hand.best_value() >= 21 or len(player_hand) >= 5:
-                #     dealer_play(shoe, dealer_hand)
-                #     payoff = settle_hand(player_hand, dealer_hand, blackjack_payout = self.blackjack_payout)
-                #     payoffs.append(payoff)
-                #     continue
-
-                """
-                --------------------------------------------------------------------------------------------------------
-                Hit 3
-                --------------------------------------------------------------------------------------------------------
-                """
+                    
                 # Hit
                 player_hand.add_card(shoe.draw_one())
 
@@ -142,31 +116,22 @@ class Simulator():
                     payoffs.append(payoff)
                     continue
                 
-                # if player_hand.is_bust() or player_hand.best_value() >= 21 or len(player_hand) >= 5:
-                #     dealer_play(shoe, dealer_hand)
-                #     payoff = settle_hand(player_hand, dealer_hand, blackjack_payout = self.blackjack_payout)
-                #     payoffs.append(payoff)
-                #     continue
-
+                """
+                while True:
+                    # Hit
+                    player_hand.add_card(shoe.draw_one())
+                    # Settle
+                    dealer_play(shoe.clone(), dealer_hand)
+                    payoff = settle_hand(player_hand, dealer_hand, blackjack_payout = self.blackjack_payout)
+                    if player_hand.is_bust() or payoff > 0:
+                        payoffs.append(payoff)
+                        break
+                continue
+            
             elif action == 'DOUBLE':
                 player_hand.doubled = True
                 player_hand.add_card(shoe.draw_one())
                 final_player_hand = player_hand
-
-            # elif action == 'SPLIT':
-            #     #
-            #     h1 = Hand([player_cards[0]], bet = 1.0, is_split_hand = True)
-            #     h2 = Hand([player_cards[1]], bet = 1.0, is_split_hand = True)
-            #     #
-            #     h1.add_card(shoe.draw_one())
-            #     h2.add_card(shoe.draw_one())
-            #     #
-            #     dealer_play(shoe, dealer_hand)
-            #     #
-            #     payoff1 = settle_hand(h1, dealer_hand, blackjack_payout = self.blackjack_payout)
-            #     payoff2 = settle_hand(h2, dealer_hand, blackjack_payout = self.blackjack_payout)
-            #     payoffs.append(payoff1 + payoff2)
-            #     continue
 
             # 
             dealer_play(shoe, dealer_hand)
@@ -198,7 +163,7 @@ class Simulator():
     
     ====================================================================================================================
     """
-    def evaluate_all(self, player_cards: List[Rank], dealer_cards: List[Rank], allow_split: bool = False) -> Dict:
+    def evaluate_all(self, player_cards: List[Rank], dealer_cards: List[Rank]) -> Dict:
 
         actions = ['STAND']
 
@@ -207,9 +172,6 @@ class Simulator():
 
         if len(player_cards) == 2:
             actions.append('DOUBLE')
-
-        # if allow_split and len(player_cards) == 2 and player_cards[0] == player_cards[1]:
-        #     actions.append('SPLIT')
 
         results = {}
         for action in actions:
@@ -238,14 +200,14 @@ if __name__ == "__main__":
 
     # Example states
     examples = [
-        ([5, 2], [7]),
+        ([1, 6], [6]),
     ]
 
     for player, dealer in examples:
 
         print("=== State:", [card_str(x) for x in player], "vs", [card_str(x) for x in dealer])
 
-        res = simulator.evaluate_all(player, dealer, allow_split = True)
+        res = simulator.evaluate_all(player, dealer)
         for a, stats in res['results'].items():
             print(f"  {a}: ev={stats['ev']:.4f}, win={stats['win_rate']:.3f}, loss={stats['loss_rate']:.3f}, push={stats['push_rate']:.3f}")
         print("  Best:", res['best_action'], "EV=", res['best_ev'])

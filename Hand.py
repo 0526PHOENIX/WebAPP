@@ -23,12 +23,11 @@ class Hand():
     Initialization
     ====================================================================================================================
     """
-    def __init__(self, cards: List[Rank] = None, bet: float = 1.0, is_split_hand: bool = False) -> None:
+    def __init__(self, cards: List[Rank] = None, bet: float = 1.0) -> None:
         
         self.cards = cards
         self.bet = bet
         self.doubled = False
-        self.is_split_hand = is_split_hand
 
         return
 
@@ -109,7 +108,7 @@ class Hand():
     """
     def clone(self) -> 'Hand':
 
-        hand_temp = Hand(self.cards[:], bet = self.bet, is_split_hand = self.is_split_hand)
+        hand_temp = Hand(self.cards[:], bet = self.bet)
         hand_temp.doubled = self.doubled
 
         return hand_temp    
