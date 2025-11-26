@@ -94,11 +94,17 @@ class Simulator():
                 player_hand.add_card(shoe.draw_one())
 
                 # Settle
-                if player_hand.is_bust() or player_hand.best_value() >= 21 or len(player_hand) >= 5:
-                    dealer_play(shoe, dealer_hand)
-                    payoff = settle_hand(player_hand, dealer_hand, blackjack_payout = self.blackjack_payout)
+                dealer_play(shoe.clone(), dealer_hand)
+                payoff = settle_hand(player_hand, dealer_hand, blackjack_payout = self.blackjack_payout)
+                if player_hand.is_bust() or payoff > 0 or len(player_hand) >= 5:
                     payoffs.append(payoff)
                     continue
+
+                # if player_hand.is_bust() or player_hand.best_value() >= 21 or len(player_hand) >= 5:
+                #     dealer_play(shoe, dealer_hand)
+                #     payoff = settle_hand(player_hand, dealer_hand, blackjack_payout = self.blackjack_payout)
+                #     payoffs.append(payoff)
+                #     continue
 
                 """
                 --------------------------------------------------------------------------------------------------------
@@ -109,11 +115,17 @@ class Simulator():
                 player_hand.add_card(shoe.draw_one())
 
                 # Settle
-                if player_hand.is_bust() or player_hand.best_value() >= 21 or len(player_hand) >= 5:
-                    dealer_play(shoe, dealer_hand)
-                    payoff = settle_hand(player_hand, dealer_hand, blackjack_payout = self.blackjack_payout)
+                dealer_play(shoe.clone(), dealer_hand)
+                payoff = settle_hand(player_hand, dealer_hand, blackjack_payout = self.blackjack_payout)
+                if player_hand.is_bust() or payoff > 0 or len(player_hand) >= 5:
                     payoffs.append(payoff)
                     continue
+                
+                # if player_hand.is_bust() or player_hand.best_value() >= 21 or len(player_hand) >= 5:
+                #     dealer_play(shoe, dealer_hand)
+                #     payoff = settle_hand(player_hand, dealer_hand, blackjack_payout = self.blackjack_payout)
+                #     payoffs.append(payoff)
+                #     continue
 
                 """
                 --------------------------------------------------------------------------------------------------------
@@ -124,11 +136,17 @@ class Simulator():
                 player_hand.add_card(shoe.draw_one())
 
                 # Settle
-                if player_hand.is_bust() or player_hand.best_value() >= 21 or len(player_hand) >= 5:
-                    dealer_play(shoe, dealer_hand)
-                    payoff = settle_hand(player_hand, dealer_hand, blackjack_payout = self.blackjack_payout)
+                dealer_play(shoe.clone(), dealer_hand)
+                payoff = settle_hand(player_hand, dealer_hand, blackjack_payout = self.blackjack_payout)
+                if player_hand.is_bust() or payoff > 0 or len(player_hand) >= 5:
                     payoffs.append(payoff)
                     continue
+                
+                # if player_hand.is_bust() or player_hand.best_value() >= 21 or len(player_hand) >= 5:
+                #     dealer_play(shoe, dealer_hand)
+                #     payoff = settle_hand(player_hand, dealer_hand, blackjack_payout = self.blackjack_payout)
+                #     payoffs.append(payoff)
+                #     continue
 
             elif action == 'DOUBLE':
                 player_hand.doubled = True
@@ -215,12 +233,12 @@ Main Function
 """
 if __name__ == "__main__":
 
-    base_shoe = Shoe(num_decks = 4, rng = random.Random(12345))
+    base_shoe = Shoe(num_decks = 6, rng = random.Random(12345))
     simulator = Simulator(base_shoe, num_sim = 10000, blackjack_payout = 1.5, rng_seed = 42)
 
     # Example states
     examples = [
-        ([10, 2], [3]),
+        ([5, 2], [7]),
     ]
 
     for player, dealer in examples:

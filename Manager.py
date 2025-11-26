@@ -205,7 +205,7 @@ Main Function
 """
 if __name__ == "__main__":
 
-    gm = Manager(num_decks = 3, num_sim = 5000)
+    gm = Manager(num_decks = 6, num_sim = 20000)
 
     count = 0
     total = 0
@@ -237,9 +237,8 @@ if __name__ == "__main__":
         total += result['result']
 
         count += 1
-        if count > 10:
+        if count > 100:
             break
-
 
     print()
     print(total)
