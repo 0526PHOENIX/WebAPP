@@ -25,7 +25,7 @@ class Manager():
     Initialization
     ====================================================================================================================
     """
-    def __init__(self, num_decks: int = 6, num_sim: int = 10000, threshold_ratio: float = 0.25) -> None:
+    def __init__(self, num_decks: int = 6, num_sim: int = 10000, threshold_ratio: float = 0.30) -> None:
 
         # Base Shoe
         self.base = Shoe(num_decks = num_decks)
@@ -51,6 +51,7 @@ class Manager():
         if self.shoe.remaining() < self.threshold:
             # Reshuffle Shoe with Base Shoe
             self.shoe = self.base.clone()
+            self.simu.base_shoe = self.shoe
 
         return
 
@@ -145,6 +146,9 @@ class Manager():
         # Hit
         self.player_hand.add_card(self.shoe.draw_one())
 
+        # Set Double State
+        self.player_hand.doubled = True
+
         # Settle
         self.finish_round()
 
@@ -201,7 +205,7 @@ Main Function
 """
 if __name__ == "__main__":
 
-    gm = Manager(num_decks = 6, num_sim = 5000)
+    gm = Manager(num_decks = 3, num_sim = 5000)
 
     count = 0
     total = 0
@@ -233,7 +237,7 @@ if __name__ == "__main__":
         total += result['result']
 
         count += 1
-        if count > 100:
+        if count > 10:
             break
 
 

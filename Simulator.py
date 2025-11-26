@@ -48,17 +48,17 @@ class Simulator():
         # Clone Shoe
         shoe = self.base_shoe.clone()
 
-        # Remove Player's Cards
-        for card in player_cards[:]:
-            if shoe.counts.get(card, 0) <= 0:
-                raise ValueError("Not enough cards in shoe to remove player card")
-            shoe.remove_card(card)
+        # # Remove Player's Cards
+        # for card in player_cards[:]:
+        #     if shoe.counts.get(card, 0) <= 0:
+        #         raise ValueError("Not enough cards in shoe to remove player card")
+        #     shoe.remove_card(card)
 
-        # Remove Dealer's Cards
-        for card in dealer_cards[:]:
-            if shoe.counts.get(card, 0) <= 0:
-                raise ValueError("Not enough cards in shoe to remove dealer card")
-            shoe.remove_card(card)
+        # # Remove Dealer's Cards
+        # for card in dealer_cards[:]:
+        #     if shoe.counts.get(card, 0) <= 0:
+        #         raise ValueError("Not enough cards in shoe to remove dealer card")
+        #     shoe.remove_card(card)
 
         return shoe
 
